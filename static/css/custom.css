@@ -59,16 +59,18 @@ body{
 #basic-info{
     background-color: #FFFFFF;
 }
-.row.vdivide > [class*='col-']:not(:last-child):after {
-    background: #e0e0e0;
-    width: 1px;
-    content: "";
-    display:block;
-    position: absolute;
-    top:0;
-    bottom: 0;
-    right: 0;
-    min-height: 70px;
+@media screen and (min-width: 992px){
+    .row.vdivide > [class*='col-']:not(:last-child):after {
+        background: #e0e0e0;
+        width: 1px;
+        content: "";
+        display:block;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        right: 0;
+        min-height: 70px;
+    }
 }
 .personal-info{
     padding: 5% 10% 5% 10%;
@@ -118,7 +120,13 @@ body{
 .project-img img{
     height: 200px;
 }
-.project-content{
+.project-content h3{
+    text-align: center;
+}
+@media screen and (min-width: 992px){
+    .project-content h3{
+        text-align: left;
+    }
 }
 #experience{
     background-color: #F5F5F5;
