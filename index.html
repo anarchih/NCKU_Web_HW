@@ -60,7 +60,8 @@
             svgWidth = $("div").width();
             barWidth = (svgWidth - 2 * svgPadding) / dataset.length;
             svg.attr("width", svgWidth);
-            rect.attr("x", function(d, i){
+            rect.transition()
+            .attr("x", function(d, i){
                 return svgPadding + barPadding + (barWidth) * i;
 
             })
