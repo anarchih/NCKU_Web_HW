@@ -1,43 +1,79 @@
 <html>
     <head>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     </head>
     <body>
-        <svg>
-        
-        </svg>
+        <div>
+            <svg>
+            
+            </svg>
+        </div>
     </body>
     <script>
         var svg = d3.select("svg");
-        var svg_width = 500;
-        var svg_height = 500;
-        var upperDomain = 10;
+        var dataset = [
+            {'lang': 'Python', 'value': 4},
+            {'lang': 'C', 'value': 3},
+            {'lang': 'JavaSript', 'value': 3},
+            {'lang': 'R', 'value': 2},
+            {'lang': 'C++', 'value': 2},
+            {'lang': 'Go', 'value': 2},
+        ]
+        var svgWidth = $("div").width();
+        var svgheight = 500;
+        var upperDomain = 5;
         var lowerDomain = 0;
         var upperRange = 500;
         var lowerRange = 0;
-        var barWidth;
-        var dataset = [2, 1, 4, 9, 3]
+        var svgPadding = 300;
+        var barPadding = 0;
+        var barWidth = (svgWidth - 2 * svgPadding) / dataset.length;
         var yLinearScale = d3.scale.linear()
                                 .domain([lowerDomain, upperDomain])
                                 .range([upperRange, lowerRange])
 
-        svg.attr("width", svg_width)
-        .attr("height", svg_height)
-        .selectAll("rect")
-        .data(dataset)
-        .enter()
-        .append("rect")
-        .attr("x", function(d, i){
-            return i * 20;
+        var rect = svg.attr("width", svgWidth)
+                    .attr("height", svgheight)
+                    .selectAll("rect")
+                    .data(dataset)
+                    .enter()
+                    .append("rect");
+
+        rect.attr("x", function(d, i){
+            return svgPadding + barPadding + (barWidth) * i;
 
         })
         .attr("y", function(d, i){
-            return yLinearScale(d);
+            return yLinearScale(d.value);
          })
-        .attr("width", 10)
+        .attr("width", barWidth - 2 * barPadding)
         .attr("height", function(d, i){
-            return d * ((upperRange - lowerRange) / (upperDomain - lowerDomain));
+            return d.value * ((upperRange - lowerRange) / (upperDomain - lowerDomain));
         })
-        .attr("fill", "red")
+        .attr("fill", function(d, i){
+            return d3.rgb(255, i * (255 / dataset.length), 0)
+        });
+
+        $(window).resize(function() {
+            svgWidth = $("div").width();
+            barWidth = (svgWidth - 2 * svgPadding) / dataset.length;
+            svg.attr("width", svgWidth);
+            rect.attr("x", function(d, i){
+                return svgPadding + barPadding + (barWidth) * i;
+
+            })
+            .attr("y", function(d, i){
+                return yLinearScale(d.value);
+             })
+            .attr("width", barWidth - 2 * barPadding)
+            .attr("height", function(d, i){
+                return d.value * ((upperRange - lowerRange) / (upperDomain - lowerDomain));
+            })
+            .attr("fill", function(d, i){
+                return d3.rgb(255, i * (255 / dataset.length), 0)
+            });
+        })
     </script>
 </html>
