@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+        <link href='https://fonts.googleapis.com/css?family=Seymour+One' rel='stylesheet' type='text/css'>
+        <style>
+            text {
+                text-anchor: middle;
+                alignment-baseline: middle;
+                fill: white;
+                font-size: 25px;
+                font-family: 'Seymour One', sans-serif;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <svg>
+                <defs>
+                     <radialGradient id="a1" cx=".5" cy=".5" r=".5" fx=".5" fy=".95">
+                         <stop offset="0%" stop-color="#ff967f"></stop>
+                        <stop offset="100%" stop-color="#ed3110"></stop>
+                     </radialGradient>
+                     <radialGradient id="a2" cx=".5" cy=".5" r=".5" fx=".5" fy=".95">
+                         <stop offset="0%" stop-color="#30a3e5"></stop>
+                        <stop offset="100%" stop-color="#00518E"></stop>
+                     </radialGradient>
+
+                     <radialGradient id="a3" cx=".5" cy=".5" r=".5" fx=".5" fy=".95">
+                         <stop offset="0%" stop-color="#3cbc5c"></stop>
+                        <stop offset="100%" stop-color="#017236"></stop>
+                     </radialGradient>
+                     <radialGradient id="a4" cx=".5" cy=".5" r=".5" fx=".5" fy=".95">
+                         <stop offset="0%" stop-color="#ed3110"></stop>
+                        <stop offset="100%" stop-color="#ff967f"></stop>
+                     </radialGradient>
+                </defs>
+            
+            </svg>
+        </div>
+    </body>
+    <script>
+        var svg = d3.select("svg");
+        var dataset = [
+            {tool: "Git", color: "url(#a1)"},
+            {tool: "Linux", color: "url(#a2)"},
+            {tool: "Vim", color: "url(#a3)"}
+        ]
+        var svgWidth = $("div").width();
+        var svgheight = 500;
+        var upperDomain = 5;
+        var lowerDomain = 0;
+        var upperRange = 500;
+        var lowerRange = 0;
+        var svgPadding = 300;
+        var barPadding = 0;
+        var barWidth = (svgWidth - 2 * svgPadding) / dataset.length;
+        var yLinearScale = d3.scale.linear()
+                                .domain([lowerDomain, upperDomain])
+                                .range([upperRange, lowerRange])
+
+        var g = svg.attr("width", svgWidth)
+                    .attr("height", svgheight)
+                    .selectAll("g")
+                    .data(dataset)
+                    .enter()
+                    .append("g");
+        var circle = g.append("circle")
+            .attr("cx", function(d, i){return i * 200 + 100})
+            .attr("cy", function(d, i){return 100})
+            .attr("r", function(d, i){return 50})
+            .attr("fill", function(d, i){return d.color});
+
+        g.on("mouseover", function(d){
+            d3.select(this.children[0]).transition().attr("r", 75);
+        })
+
+        g.on("mouseout", function(d){
+            d3.select(this.children[0]).transition().attr("r", 50);
+
+        })
+        g.append("text")
+            .attr("x", function(d, i){return i * 200 + 100})
+            .attr("y", function(d, i){return 100})
+            .text(function(d, i){return d.tool})
+
+
+    </script>
+</html>
