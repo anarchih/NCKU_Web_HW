@@ -107,10 +107,16 @@ body{
 }
 #skill{
     background-color:#F5F5F5;
-    padding: 5% 10% 5% 10%;
+    padding: 5% 0 5% 0;
 }
 .skill-block{
     font-family: 'Montserrat', sans-serif;
+    padding-bottom: 3%;
+}
+.lang-text{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    text-anchor: middle;
 }
 #project{
     background-color: #FFFFFF;
