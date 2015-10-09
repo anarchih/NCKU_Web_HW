@@ -118,6 +118,17 @@ body{
     font-size: 18px;
     text-anchor: middle;
 }
+#speciality{
+     padding: 0% 5% 3% 5%;
+}
+
+#speciality h4{
+    margin-top: 3%;
+}
+
+.speciality-col{
+    margin-top: 50px;
+}
 #project{
     background-color: #FFFFFF;
     padding: 5% 15% 5% 15%;

@@ -1,5 +1,5 @@
-
-var svg = d3.select("svg");
+lang = function(){
+var svg = d3.select("#lang");
 var dataset = [
     {'lang': 'Python', 'value': 4},
     {'lang': 'JS', 'value': 3},
@@ -65,7 +65,6 @@ function resizing(){
     .attr("fill", function(d, i){
         return d3.rgb(255, i * (255 / dataset.length), 0)
     });
-
     text.transition()
         .attr("width", svgWidth)
         .attr("height", svgheight)
@@ -112,3 +111,4 @@ rect.attr("x", 0)
 
 resizing();
 $(window).resize(resizing)
+}();
