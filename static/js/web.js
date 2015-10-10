@@ -68,10 +68,7 @@ web = function(){
             .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
 
      }
-        console.log(g)
-        console.log(g)
 
-    console.log(arc)
     g.on("mouseover", function(){
         d3.select(this)
         .select("path")
