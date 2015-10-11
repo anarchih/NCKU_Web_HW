@@ -12,7 +12,7 @@ web = function(){
         radius = Math.min(svgWidth, svgHeight) / 2;
 
     var color = d3.scale.ordinal()
-        .range(["#98abc5", "#8a89a6", "#a05d56", "#d0743c", "#ff8c00"]);
+        .range(["#54D14F", "#4FC44A", "#45AB40", "#358532", "#367029"]);
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 10)
@@ -72,7 +72,7 @@ web = function(){
     g.on("mouseover", function(){
         d3.select(this)
         .select("path")
-        .style("fill", "red");
+        .style("fill", "#00FF00");
     })
 
     g.on("mouseout", function(){

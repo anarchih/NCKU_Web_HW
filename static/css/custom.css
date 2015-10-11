@@ -129,6 +129,10 @@ body{
 .speciality-col{
     margin-top: 50px;
 }
+text{
+    font-size: 16px;
+
+}
 #project{
     background-color: #FFFFFF;
     padding: 5% 15% 5% 15%;
