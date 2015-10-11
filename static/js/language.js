@@ -7,6 +7,13 @@ var dataset = [
     {'lang': 'R', 'value': 2},
     {'lang': 'C++', 'value': 2},
 ]
+var zeroData = [
+        {'lang': 'Python', 'value': 0},
+        {'lang': 'JS', 'value': 0},
+        {'lang': 'C', 'value': 0},
+        {'lang': 'R', 'value': 0},
+        {'lang': 'C++', 'value': 0},
+    ]
 var svgWidth = 0;
 var svgMaxWidth = 800;
 var svgheight = 0;
@@ -22,6 +29,34 @@ var yLinearScale = d3.scale.linear()
                         .domain([lowerDomain, upperDomain])
                         .range([upperRange, lowerRange])
 function init(){
+    skillVarRecalcuate();
+    svg.attr("width", svgWidth)
+        .attr("height", svgheight);
+    rect.attr("x", function(d, i){
+        return svgPadding + barPadding + (barWidth) * i;
+    })
+    .attr("y", function(d, i){
+        return yLinearScale(d.value);
+     })
+    .attr("width", barWidth - 2 * barPadding)
+    .attr("height", function(d, i){
+        return d.value * ((upperRange - lowerRange) / (upperDomain - lowerDomain));
+    })
+    .attr("fill", function(d, i){
+        return d3.rgb(255, i * (255 / dataset.length), 0)
+    });
+    text.attr("width", svgWidth)
+        .attr("height", svgheight)
+        .attr("class", "lang-text")
+        .text(function(d){
+            return d.lang;
+        })
+        .attr("x", function(d, i){
+            return svgPadding + (barWidth) * i + barWidth / 2;
+        })
+        .attr("y", function(d, i){
+            return yLinearScale(d.value) - textHeightOffset;
+        })
 
 }
 function skillVarRecalcuate(){
@@ -83,14 +118,14 @@ function resizing(){
 var rect = svg.attr("width", svgWidth)
             .attr("height", svgheight)
             .selectAll("rect")
-            .data(dataset)
+            .data(zeroData)
             .enter()
             .append("rect");
 
 var text = svg.attr("width", svgWidth)
             .attr("height", svgheight)
             .selectAll("text")
-            .data(dataset)
+            .data(zeroData)
             .enter()
             .append("text")
             .attr("class", "lang-text")
@@ -98,8 +133,23 @@ var text = svg.attr("width", svgWidth)
                 return d.lang;
             })
             .attr("x", 0)
-            .attr("y", 0)
+            .attr("y", 0);
 
+
+function activeChart(){
+    langTop = $("#lang").offset().top;
+    windowHeight = $(window).innerHeight();
+    windowTop = $(window).scrollTop();
+    if(windowTop + windowHeight * 2 / 3 < langTop){
+        rect.data(zeroData);
+        text.data(zeroData);
+
+    }else{
+        rect.data(dataset);
+        text.data(dataset);
+    }
+    resizing();
+}
 
 rect.attr("x", 0)
     .attr("y", 0)
@@ -109,6 +159,11 @@ rect.attr("x", 0)
         return d3.rgb(255, i * (255 / dataset.length), 0)
     });
 
-resizing();
+init();
+
+
 $(window).resize(resizing)
+
+$(window).scroll(activeChart);
+
 }();
