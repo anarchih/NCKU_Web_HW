@@ -33,11 +33,11 @@ opt = function(){
         .append("g")
         .attr("class", "arc");
 
-    path = g.append("path")
+    var path = g.append("path")
     .attr("d", arc)
     .style("fill", function(d) { return color(d.data.skill); });
 
-    text = g.append("text")
+    var text = g.append("text")
     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
     .attr("dy", ".35em")
     .style("text-anchor", "middle")
@@ -67,6 +67,36 @@ opt = function(){
 
      }
 
+    function scrollEffect(){
+        var langTop = $("#optimization").offset().top;
+        var windowHeight = $(window).innerHeight();
+        var windowTop = $(window).scrollTop();
+        if(windowTop + windowHeight / 5 * 4 < langTop){
+            arc = d3.svg.arc()
+                    .outerRadius(1)
+                    .innerRadius(0);
+            path.transition()
+            .delay(200)
+            .duration(500)
+            .attr("d", arc);
+
+            text.transition()
+            .duration(200)
+            .attr("opacity", 0);
+        }else{
+            arc = d3.svg.arc()
+                    .outerRadius(radius - 10)
+                    .innerRadius(0);
+            path.transition()
+            .duration(500)
+            .attr("d", arc);
+
+            text.transition()
+            .delay(500)
+            .attr("opacity", 1);
+        }
+    }
+
     g.on("mouseover", function(){
         d3.select(this)
         .select("path")
@@ -80,5 +110,6 @@ opt = function(){
     })
 
     $(window).resize(resize)
+    $(window).scroll(scrollEffect)
 
 }();
